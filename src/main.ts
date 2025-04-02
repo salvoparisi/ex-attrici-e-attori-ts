@@ -64,3 +64,24 @@ async function getAllActress(): Promise<Actress[] | null> {
   }
 }
 
+async function getActresses(id: number[]): Promise<(Actress | null)[]> {
+  const arrayPromise = [];
+  for (let i = 0; i < id.length; i++) {
+    arrayPromise.push(getActress(id[i]));
+  }
+  try {
+    const result = await Promise.all(arrayPromise);
+    if (Array.isArray(result)) {
+      return result;
+    } else {
+      throw new Error('Formato non valido')
+    }
+  } catch (error) {
+    console.error("Errore durante il recupero delle attrici:", error);
+    return [];
+  }
+}
+
+
+
+
