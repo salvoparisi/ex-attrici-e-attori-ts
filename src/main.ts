@@ -44,3 +44,23 @@ async function getActress(id: number): Promise<Actress | null> {
     return null
   }
 }
+
+async function getAllActress(): Promise<Actress[] | null> {
+  try {
+    const res = await fetch('https://boolean-spec-frontend.vercel.app/freetestapi/actresses')
+    const dati: unknown = await res.json()
+    if (dati && Array.isArray(dati)) {
+      if (dati.every(dato => isActress(dato))) {
+        return dati
+      } else {
+        throw new Error('Formato non valido')
+      }
+    } else {
+      throw new Error('Formato non valido')
+    }
+  } catch (err) {
+    console.error(err)
+    return null
+  }
+}
+
